@@ -28,9 +28,9 @@ public class MainService {
     }
 
     public static MainService getInstance() {
-        if (mainService != null) {
+        if (mainService == null) {
             synchronized (MainService.class) {
-                if (mainService != null) {
+                if (mainService == null) {
                     mainService = new MainService();
                 }
             }
@@ -41,18 +41,17 @@ public class MainService {
     /**
      * 压缩文件
      */
-    public void compressFile(String src, String des) {
+    public void compressFile(InputStream i,String src, String des) {
         File srcFile = new File(src);
 
         try {
             if (!srcFile.exists()) {
                 srcFile.createNewFile();
-            } else if (!srcFile.isFile()) {
-                throw new IllegalStateException("此路径不是文件");
             }
             bufferedInputStream = new BufferedInputStream(new FileInputStream(srcFile));
             gzipOutputStream = new GZIPOutputStream(new FileOutputStream(des));
-            read(bufferedInputStream, gzipOutputStream);
+//            read(bufferedInputStream, gzipOutputStream);
+            read(i,gzipOutputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
