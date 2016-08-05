@@ -12,7 +12,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Created by 328789 on 2016/7/28.
@@ -70,6 +74,41 @@ public class MainService {
                 gzipOutputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+    /**
+     * 解压
+     */
+    public void jCompress(String src,String des){
+        File file = new File(src);
+        if(!file.exists()){
+            throw new IllegalStateException("压缩文件不存在");
+        }
+        InputStream inputStream=null;
+        BufferedOutputStream bufferedOutputStream2=null;
+        try {
+            ZipFile zipFile = new ZipFile(src);
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            ZipEntry zipEntry = entries.nextElement();
+             inputStream = zipFile.getInputStream(zipEntry);
+            bufferedOutputStream2 = new BufferedOutputStream(new FileOutputStream(des));
+            read(inputStream,bufferedOutputStream2);
+        } catch (IOException e) {
+            Log.e("EEEEEEEEEE",e.getMessage());
+            e.printStackTrace();
+        }finally {
+            try {
+                if(inputStream!=null)
+                    inputStream.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            try {
+                if(bufferedOutputStream2!=null)
+                bufferedOutputStream2.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         }
     }

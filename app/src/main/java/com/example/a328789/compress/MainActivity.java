@@ -9,10 +9,14 @@ import android.widget.Toast;
 
 import com.example.a328789.compress.service.MainService;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button compressFile;
     @BindView(R.id.button2)
     Button compressFolder;
+    @BindView(R.id.button3)
+    Button jCompress;
     private MainService service;
 
     @Override
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         service = MainService.getInstance();
         compressFile.setOnClickListener(this);
         compressFolder.setOnClickListener(this);
+        jCompress.setOnClickListener(this);
     }
 
     @Override
@@ -52,18 +59,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.button2:
-                Toast.makeText(this,"压缩完成",Toast.LENGTH_LONG).show();
-                String content="我是被压缩的内容";
-                String s = service.getPath() + "content.zip";
-                Log.e("$$$$$$$$",s);
+                InputStream hh=null;
+                ZipOutputStream zipoutputStream=null;
                 try {
-                    GZIPOutputStream gzipOutputStream = new GZIPOutputStream(new FileOutputStream(s));
-                    gzipOutputStream.write(s.getBytes());
-                    gzipOutputStream.flush();
-                    gzipOutputStream.close();
+                    File file1 = new File(service.getPath() + "/L.txt");
+                    hh = new FileInputStream(file1);
+                    File file = new File(service.getPath() + "/L.zip");
+                    if(!file.exists()){
+                        file.createNewFile();
+                    }
+
+                    zipoutputStream = new ZipOutputStream(new FileOutputStream(service.getPath() + "/L.zip"));
+                    Log.e("########",service.getPath() + "/L.zip");
+                    ZipEntry zipEntry = new ZipEntry(file.getName());
+                    zipEntry.setSize(file1.length());
+                    zipoutputStream.putNextEntry(zipEntry);
+                    zipoutputStream.setComment("comment");
+                    int len=0;
+                    byte[] bytes = new byte[1024];
+                    while ((len=hh.read(bytes))!=-1){
+                        zipoutputStream.write(bytes,0,len);
+
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.e("EEEEEEEEEE",e.getMessage());
                 }
+                break;
+            case R.id.button3:
+                service.jCompress(service.getPath()+"/L.zip",service.getPath()+"/g.txt");
                 break;
         }
     }
