@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.a328789.compress.service.MainService;
@@ -29,7 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button compressFolder;
     @BindView(R.id.button3)
     Button jCompress;
+    @BindView(R.id.image)
+    ImageView image;
     private MainService service;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         compressFile.setOnClickListener(this);
         compressFolder.setOnClickListener(this);
         jCompress.setOnClickListener(this);
+
+        loadImage();
+    }
+
+    private void loadImage() {
+
     }
 
     @Override
