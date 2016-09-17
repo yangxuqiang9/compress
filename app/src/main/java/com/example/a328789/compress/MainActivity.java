@@ -1,5 +1,6 @@
 package com.example.a328789.compress;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button jCompress;
     @BindView(R.id.image)
     ImageView image;
-    private MainService service;
+    MainService service;
+    @BindView(R.id.image_view)
+    Button image_view;
 
 
     @Override
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         compressFile.setOnClickListener(this);
         compressFolder.setOnClickListener(this);
         jCompress.setOnClickListener(this);
+        image_view.setOnClickListener(this);
 
         loadImage();
     }
@@ -102,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button3:
                 service.jCompress(service.getPath()+"/L.zip",service.getPath()+"/g.txt");
                 break;
+            case R.id.image_view:
+                startActivity(new Intent(this,ImageActivity.class));
         }
     }
 }
