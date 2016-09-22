@@ -16,12 +16,16 @@ public class Utils {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int grey = pixels[width * i + j];
+
                 //分离三原色
-                int red = ((grey & 0x00FF0000) >> 16);
-                int green = ((grey & 0x0000FF00) >> 8);
-                int blue = (grey & 0x000000FF);
+//                int red = ((grey & 0x00FF0000) >> 16);
+//                int green = ((grey & 0x0000FF00) >> 8);
+//                int blue = (grey & 0x000000FF);
                 //转化成灰度像素
-                grey = (int) (red * 0.3 + green * 0.59 + blue * 0.11);
+                if(grey!=0xffffffff){
+                    grey=0;
+                }
+//                grey = (int) (red * 0.3 + green * 0.59 + blue * 0.11);
                 grey = alpha | (grey << 16) | (grey << 8) | grey;
                 pixels[width * i + j] = grey;
             }

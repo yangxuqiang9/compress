@@ -31,8 +31,8 @@ public class ImageActivity extends AppCompatActivity {
 
     private void init() {
 
-        src_iamge.setImageResource(R.mipmap.deppon);
-        Bitmap bitmap = Utils.convertToBlackWhite(BitmapFactory.decodeResource(getResources(), R.mipmap.deppon),500,500);
+        src_iamge.setImageResource(R.mipmap.bt);
+        Bitmap bitmap = Utils.convertToBlackWhite(BitmapFactory.decodeResource(getResources(), R.mipmap.deppon),600,600);
         des_image.setImageBitmap(bitmap);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.a328789.compress;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.hardware.camera2.CameraManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MainService service;
     @BindView(R.id.image_view)
     Button image_view;
+    @BindView(R.id.bt_zxing)
+    Button btZxing;
 
 
     @Override
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         compressFolder.setOnClickListener(this);
         jCompress.setOnClickListener(this);
         image_view.setOnClickListener(this);
+        btZxing.setOnClickListener(this);
 
         loadImage();
     }
@@ -108,6 +114,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.image_view:
                 startActivity(new Intent(this,ImageActivity.class));
+                break;
+            case R.id.bt_zxing:
+                startScan();
+                break;
         }
+    }
+
+
+    private void startScan() {
+        startActivityForResult(new Intent(this,ZxingScanActivity.class),1);
     }
 }
